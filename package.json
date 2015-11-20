@@ -1,0 +1,21 @@
+{
+  "name": "rhuatserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "application.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "fh-mbaas-api": "^5.3.5",
+    "lodash": "^3.10.1",
+    "node-uuid": "^1.4.7",
+    "rhmap-express-wrapper": "^0.1.1",
+    "websocket": "^1.0.22",
+    "winston": "^2.1.1"
+  }
+}
