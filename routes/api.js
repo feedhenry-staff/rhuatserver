@@ -9,6 +9,7 @@ api.use(jsonP);
 
 
 api.post("/session/:sessionId/registerDevice",hfn(session.registerDevice,["params.sessionId","body"]));
+api.put("/session/:sessionId/devices",hfn(session.setDevices,["params.sessionId","body"]));
 api.get("/session/:sessionId/devices",hfn(session.getDevices,["params.sessionId"]));
 api.get("/sessions",hfn(session.getSessions,[]));
 api.delete("/session/:sessionId/device/:deviceId",hfn(session.rmDevices,["params.sessionId","params.deviceId"]));

@@ -6,7 +6,8 @@ module.exports = {
   registerDevice: registerDevice,
   getDevices: getDevices,
   rmDevices: rmDevices,
-  getSessions:getSessions
+  getSessions:getSessions,
+  setDevices:setDevices
 }
 var log = require("./log");
 var uuid = require('node-uuid');
@@ -29,6 +30,11 @@ function getSessions(cb){
       pendingMsg:ses.pendingMsg
     }
   }));
+}
+function setDevices(sessionId,devices,cb){
+  var ses=getSessionById(sessionId);
+  ses.devices=devices;
+  cb(null);
 }
 function getDevices(sessionId, cb) {
   var ses = getSessionById(sessionId);
@@ -68,8 +74,9 @@ function createSession(connection) {
   });
   connection.on("message", onConnectionMessage);
   connection.on("error", onConnectionError(connection));
-  connection.on("close", onConnectionClose(connection));
-  connection.ping(uid);
+  // connection.on("close", onConnectionClose(connection));
+  connection.emit("ping",uid);
+  // connection.ping(uid);
 }
 
 function rmConnection(connection) {
@@ -86,9 +93,9 @@ function _send(session, msg, cb) {
     msgId: Date.now()+ "" + Math.round(Math.random() * 1000000),
     data: msg
   }
-  if (session && session.connection && session.connection.connected) {
+  if (session && session.connection) {
     callbackPool[message.msgId] = cb;
-    session.connection.sendUTF(JSON.stringify(message));
+    session.connection.emit("message",JSON.stringify(message));
     session.pendingMsg.push(message.msgId);
   }else{
     cb(new Error("Session not found"));
@@ -114,7 +121,7 @@ function sendToDevice(deviceId, msg, cb) {
 }
 
 function onConnectionMessage(message) {
-  var data = message.utf8Data;
+  var data = message.toString("utf8");
   try {
     var obj = JSON.parse(data);
     parseMsg(obj);
