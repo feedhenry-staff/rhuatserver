@@ -7,7 +7,9 @@ module.exports = {
   getDevices: getDevices,
   rmDevices: rmDevices,
   getSessions:getSessions,
-  setDevices:setDevices
+  setDevices:setDevices,
+
+  newWdSession:newWdSession
 }
 var log = require("./log");
 var uuid = require('node-uuid');
@@ -15,12 +17,33 @@ var _ = require("lodash");
 // {
 //     "uuid":String,
 //     "connection":Object,
-//     "devices":[{id:String,name:String}],
+//     "devices":[{id:String,name:String,wdSession:{createOn:Date,sessionId:String}}],
 //     "connectDate":Date
 //     "pendingMsg":[String]
 // }
 var sessions = [];
 var callbackPool = {};
+function newWdSession(deviceId,sessionId){
+  var ses=_.find(sessions,function(s){
+    var dev=_.find(s.devices,function(d){
+      return d.id===deviceId;
+    });
+    if (dev){
+      return true;
+    }else{
+      return false;
+    }
+  });
+  if (ses){
+
+  }
+  sessions.push({
+    deviceId:deviceId,
+    sessionId:sessionId,
+    createOn:new Date()
+  });
+}
+
 function getSessions(cb){
   cb(null,_.map(sessions,function(ses){
     return {
@@ -33,7 +56,9 @@ function getSessions(cb){
 }
 function setDevices(sessionId,devices,cb){
   var ses=getSessionById(sessionId);
-  ses.devices=devices;
+  if (ses){
+    ses.devices=devices;
+  }
   cb(null);
 }
 function getDevices(sessionId, cb) {
@@ -149,7 +174,9 @@ function _rmPendingMsg(msgId) {
   var ses = _.find(sessions, function(se) {
     return se.pendingMsg.indexOf(msgId) > -1;
   });
-  ses.pendingMsg.splice(ses.pendingMsg.indexOf(msgId), 1);
+  if (ses){
+    ses.pendingMsg.splice(ses.pendingMsg.indexOf(msgId), 1);
+  }
 }
 
 function onConnectionError(connection) {

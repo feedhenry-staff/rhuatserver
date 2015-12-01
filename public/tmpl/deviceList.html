@@ -1,0 +1,66 @@
+<md-content ng-controller="deviceList" layout-padding layout="row">
+  <div ng-repeat="ses in sessions">
+    <md-list>
+      <md-subheader class="md-no-sticky">Session: {{ses.uuid}}</md-subheader>
+      <md-list-item class="md-3-line" ng-repeat="dev in ses.devices" ng-click="selectDevice(dev)">
+        <img ng-src="imgs/{{dev.type}}.png" class="md-avatar" alt="{{dev.type}}" />
+        <div class="md-list-item-text" layout="column">
+          <p>Name: {{dev.name}}</p>
+          <p><b>UDID: {{dev.id}}</b></p>
+          <p layout="row">
+            <span flex="50">class: {{dev.class}}</span>
+            <span>version: {{dev.version}}</span>
+          </p>
+        </div>
+        <md-divider></md-divider>
+      </md-list-item>
+    </md-list>
+  </div>
+  <div flex>
+    <div ng-if="curDevice">
+      <div>
+        <span><b>Name: </b></span>
+        <span>{{curDevice.name}}</span>
+      </div>
+      <div>
+        <span><b>UDID: </b></span>
+        <span>{{curDevice.id}}</span>
+      </div>
+      <div>
+        <span><b>OS: </b></span>
+        <span>{{curDevice.type}}</span>
+      </div>
+      <div>
+        <span><b>Version: </b></span>
+        <span>{{curDevice.version}}</span>
+      </div>
+      <div>
+        <span><b>Class: </b></span>
+        <span>{{curDevice.class}}</span>
+      </div>
+      <md-button class="md-raised md-primary" ng-click="createSessionDlg(curDevice.id,curDevice.type)">Create Session</md-button>
+      <div>
+        <md-list>
+          <md-subheader class="md-no-sticky">Sessions: <md-button ng-disabled="loading" ng-click="refreshDeviceSession(curDevice.id)" class="md-icon-button md-primary" aria-label="Refresh">
+              <md-icon md-svg-icon="imgs/ic_refresh_black_24px.svg"></md-icon>
+          </md-button></md-subheader>
+          <md-list-item class="md-2-line" ng-repeat="deSes in curDevice.sessions">
+            <div layout="row" class="md-list-item-text">
+              <div flex layout="column">
+                <p>Session Id: {{deSes.sessionId}}</p>
+                <p>Started: {{deSes.createOn}}</p>
+              </div>
+              <div layout="row">
+                <md-button class="md-primary md-raised" ui-sref="wdsession({sessionId:deSes.sessionId})">Attach</md-button>
+                <md-button class="md-warn md-raised" ng-click="terminateSession(curDevice.id,deSes.sessionId)">Terminate</md-button>
+              </div>
+            </div>
+          </md-list-item>
+        </md-list>
+      </div>
+    </div>
+    <div ng-if="!curDevice" layout="column" layout-align="center center">
+      <p>Please choose a device from the list</p>
+    </div>
+  </div>
+</md-content>

@@ -1,0 +1,26 @@
+<md-dialog layout="column" aria-label="Create Session" ng-cloak>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <h2>Create wd Session</h2>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="cancel()">
+        <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <md-dialog-content layout-padding layout="column" style="min-height:300px;min-width:500px">
+    <div></div>
+    <md-input-container >
+      <label>Binary File URL</label>
+      <input ng-model="url"/>
+    </md-input-container>
+  </md-dialog-content>
+  <md-dialog-actions layout="row">
+    <md-button class="md-primary md-raised" ng-click="submit()">
+      Create Session
+    </md-button>
+    <md-button ng-click="cancel()" style="margin-right:20px;">
+      Cancel
+    </md-button>
+  </md-dialog-actions>
+</md-dialog>

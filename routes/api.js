@@ -13,3 +13,6 @@ api.put("/session/:sessionId/devices",hfn(session.setDevices,["params.sessionId"
 api.get("/session/:sessionId/devices",hfn(session.getDevices,["params.sessionId"]));
 api.get("/sessions",hfn(session.getSessions,[]));
 api.delete("/session/:sessionId/device/:deviceId",hfn(session.rmDevices,["params.sessionId","params.deviceId"]));
+
+api.get("/device/:deviceId/sessions",hfn(device.getSessionsByDeviceId,["params.deviceId"]));
+api.delete("/device/:deviceId/session/:sessionId",hfn(device.rmSessionById,["params.deviceId","params.sessionId"]));
