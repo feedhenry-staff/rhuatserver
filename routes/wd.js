@@ -22,9 +22,9 @@ wd.post("/session", function(req, res) {
   session.sendToDevice(deviceId, data, function(err, r) {
     if (err) {
       log.error(err);
-      res.end(err);
+      res.status(500).end(err);
     } else {
-      var wdSessionId = r.split("sessionId")[1].trim();
+      var wdSessionId = JSON.parse(r).sessionId;
       if (wdSessionId.indexOf("null") > -1) {
         log.info("wd session created failed.");
         res.end(r);
@@ -45,7 +45,7 @@ wd.use("/session/:sessionId*", function(req, res) {
     session.sendToDevice(deviceId, data, function(err, r) {
       if (err) {
         log.error(err);
-        res.end(err);
+        res.status(500).end(err);
       } else {
         res.end(r);
       }

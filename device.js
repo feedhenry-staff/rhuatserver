@@ -14,6 +14,7 @@ module.exports={
 var sessions=[];
 var _=require("lodash");
 var session=require("./session");
+var log=require("./log");
 function rmSessionById(deviceId,sessionId,cb){
   var removed=_.remove(sessions,function(ses){
     return ses.deviceId===deviceId && ses.sessionId ===sessionId;
@@ -24,7 +25,7 @@ function rmSessionById(deviceId,sessionId,cb){
       method:"DELETE"
     },function(err,r){
       if (err){
-        log.err(err);
+        log.error(err);
         cb(err);
       }else{
         cb();

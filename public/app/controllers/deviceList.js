@@ -26,9 +26,8 @@ app.controller("deviceList", function($scope, device, $mdDialog) {
         "browserName": "",
         "appium-version": "1.3",
         "platformName": platform,
-        "platformVersion": "4.4.2",
         "udid": deId,
-        "deviceName": "Android Emulator",
+        "deviceName": "Real Device",
         "app": "",
         "newCommandTimeout": 600
       }

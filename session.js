@@ -161,7 +161,11 @@ function parseMsg(obj) {
     var data = obj.data;
     var cb = callbackPool[msgId];
     if (cb) {
-      cb(null, data);
+      if (obj.isError){
+        cb(data);
+      }else{
+        cb(null, data);
+      }
       delete callbackPool[msgId];
     }
     _rmPendingMsg(msgId);

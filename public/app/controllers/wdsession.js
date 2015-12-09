@@ -60,7 +60,7 @@ app.controller("wdsession", function($scope, $stateParams, wd) {
       .then(function() {
         setTimeout(function() {
           renderScreen();
-        }, 300);
+        }, 1000);
       });
     actionTimer = null;
   }
@@ -90,8 +90,9 @@ app.controller("wdsession", function($scope, $stateParams, wd) {
         } else {
           if (ss.value && ss.value.length > 0) {
             var img = new Image();
+            var ctx=$scope.getCtx();
             img.onload = function() {
-              $scope.getCtx().drawImage(img, 0, 0);
+              ctx.drawImage(img,0,0, ctx.canvas.width, ctx.canvas.height);
             }
             img.src = "data:image/png;base64," + ss.value;
 
