@@ -20,6 +20,26 @@ app.controller("deviceList", function($scope, device, $mdDialog) {
         $scope.refreshDeviceSession();
       });
   }
+  $scope.showCfgDlg=function(deId,platform){
+    var desire = {
+      "desiredCapabilities": {
+        "browserName": "",
+        "appium-version": "1.3",
+        "platformName": platform,
+        "udid": deId,
+        "deviceName": "Real Device",
+        "app": "<Add binary url here>",
+        "newCommandTimeout": 600
+      }
+    };
+    $mdDialog.show(
+      $mdDialog.alert()
+        .clickOutsideToClose(true)
+        .title('Desired Capabilities')
+        .content(JSON.stringify(desire,null,2))
+        .ok('Got it!')
+    );
+  }
   $scope.createSessionDlg = function(deId, platform) {
     var desire = {
       "desiredCapabilities": {

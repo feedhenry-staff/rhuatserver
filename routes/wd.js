@@ -44,8 +44,8 @@ wd.use("/session/:sessionId*", function(req, res) {
     var data = getForwardData(req);
     session.sendToDevice(deviceId, data, function(err, r) {
       if (err) {
-        log.error(err);
-        res.status(500).end(err);
+        console.error(err);
+        res.status(500).end(err.toString());
       } else {
         res.end(r);
       }

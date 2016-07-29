@@ -39,6 +39,7 @@
         <span>{{curDevice.class}}</span>
       </div>
       <md-button class="md-raised md-primary" ng-click="createSessionDlg(curDevice.id,curDevice.type)">Create Session</md-button>
+      <md-button class="md-raised md-primary" ng-click="showCfgDlg(curDevice.id,curDevice.type)">Detailed Info</md-button>
       <div>
         <md-list>
           <md-subheader class="md-no-sticky">Sessions: <md-button ng-disabled="loading" ng-click="refreshDeviceSession(curDevice.id)" class="md-icon-button md-primary" aria-label="Refresh">
